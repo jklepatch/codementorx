@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "jest": "^24.1.0",
@@ -32,6 +33,7 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
+    "file-loader": "^3.0.1",
     "sequelize-cli": "^5.4.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",

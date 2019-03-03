@@ -19,6 +19,14 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /.\/client\/*.*\.png$/,
+        use: [
+          {
+            loader: 'file-loader'
+          }
+        ]
       }
     ]
   },
