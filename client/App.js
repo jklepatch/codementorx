@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Signup from './Signup';
 import Sidebar from './Sidebar';
+import { AuthProvider } from './AuthContext';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -23,8 +24,10 @@ class App extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.container}>
-        <Sidebar user={{name: 'Jose'}} />
-        {children}
+        <AuthProvider>
+          <Sidebar user={{name: 'Jose'}} />
+          {children}
+        </AuthProvider>
       </div>
     );
   }
