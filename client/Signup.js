@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from "react-router";
+import { Redirect } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -34,6 +37,12 @@ const styles = theme => ({
 });
 
 class Signup extends Component {
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  };
+
   state = {
     email: '',
     name: '',
@@ -41,7 +50,7 @@ class Signup extends Component {
     errors: undefined 
   }
 
-  async handleSubmit(e) {
+  async handleSubmit (e) {
     e.preventDefault();
     const { errors, ...rest } = this.state;
     const resp = await this.context.api.signup(rest);
@@ -51,7 +60,6 @@ class Signup extends Component {
       return; 
     }
     this.context.login({...rest, ...jsonResp});
-    //@todo this.router.navigate('/ideas');
   }
 
   handleChangeEmail(email) {
@@ -68,6 +76,7 @@ class Signup extends Component {
 
   render() {
     const { classes } = this.props;
+    if(this.context.user) return <Redirect to='/ideas' />
     return (
       <div className={classes.container}>
           <form className={classes.form} onSubmit={(e) => this.handleSubmit(e)} >
@@ -106,4 +115,4 @@ class Signup extends Component {
 
 Signup.contextType = AuthContext;
 
-export default withStyles(styles)(Signup);
+export default withRouter(withStyles(styles)(Signup));

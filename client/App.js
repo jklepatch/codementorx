@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { Switch, BrowserRouter as Router } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import Signup from './Signup';
+import Login from './Login';
+import Ideas from './Ideas';
 import Sidebar from './Sidebar';
 import { AuthProvider } from './AuthContext';
-import { withStyles } from '@material-ui/core/styles';
+import { PrivateRoute, PublicRoute } from './Routes';
 
 const styles = theme => ({
   container: {
@@ -13,20 +17,19 @@ const styles = theme => ({
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: undefined
-    };
-  }
   render() {
-    const children = typeof this.state.user === 'undefined' ? <Signup /> : null;
     const { classes } = this.props;
     return (
       <div className={classes.container}>
         <AuthProvider>
-          <Sidebar user={{name: 'Jose'}} />
-          {children}
+          <Sidebar />
+          <Router>
+            <Switch>>
+              <PublicRoute path='/' component={Signup} exact />
+              <PublicRoute path='/login' component={Login} />
+              <PrivateRoute path='/ideas' component={Ideas} />
+            </Switch>
+          </Router>
         </AuthProvider>
       </div>
     );

@@ -22,9 +22,12 @@
     "jest": "^24.1.0",
     "jsonschema": "^1.2.4",
     "jsonwebtoken": "^8.5.0",
+    "prop-types": "^15.7.2",
     "rand-token": "^0.4.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "sequelize": "^4.43.0",
     "sqlite3": "^4.0.6",
     "supertest": "^3.4.2"
