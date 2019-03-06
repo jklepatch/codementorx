@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from "react-router";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -103,9 +103,9 @@ class Signup extends Component {
             <Button size="medium" type="submit" className={classes.button} >
               SIGN UP
             </Button>
-            <Button size="medium">
+            <Link to='/login'>
               Already have an account? Login
-            </Button>
+            </Link>
         </form>
 
       </div>

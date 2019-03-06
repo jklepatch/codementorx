@@ -12,8 +12,21 @@ const createUser = {
   required: ["email", "name", "password"]
 };
 
+const login = {
+  type: "object",
+  required: true,
+  properties: {
+    email: {type: "string"}, 
+    password: {type: "string"}
+  },
+  required: ["email", "password"]
+}
+
 module.exports = {
   '/users': {
-      POST: createUser
+    POST: createUser
+  },
+  '/access-tokens': {
+    POST: login
   }
 };

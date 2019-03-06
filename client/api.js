@@ -18,6 +18,10 @@ class Api {
   signup(user) {
     return this._post('/users', user);
   }
+
+  login(user) {
+    return this._post('/access-tokens', user);
+  }
 }
 
 export default Api;

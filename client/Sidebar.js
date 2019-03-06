@@ -18,7 +18,7 @@ const styles = theme => ({
 
 const Sidebar = ({ classes }) => (
   <AuthConsumer>
-    {({user}) => (
+    {({user, logout}) => (
       <div className={classes.container}>
         <img src={ideaPoolImg} />
         <p>The Idea Pool</p>
@@ -27,7 +27,7 @@ const Sidebar = ({ classes }) => (
             <hr />
             <p>Pic</p>
             <p>{user.name}</p>
-            <a>Logout</a>
+            <a href='#' onClick={(e) => {e.preventDefault(); logout();}}>Logout</a>}
           </div>
         }
       </div>
