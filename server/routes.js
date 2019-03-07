@@ -39,6 +39,7 @@ router.post('/access-tokens', async (req, res) => {
 });
 
 router.post('/ideas', [ensureAuth], async(req, res) => {
+  console.log(req.userId);
   const idea = await models.Idea.create({
     userId: req.userId,
     content: req.body.content,
@@ -48,14 +49,27 @@ router.post('/ideas', [ensureAuth], async(req, res) => {
   });
   res.status(201);
   res.send({
-    id: idea.id,
-    content: idea.content,
-    impact: idea.impact,
-    ease: idea.ease,
-    confidence: idea.confidence,
-    average_score: average(idea.impact, idea.ease, idea.confidence),
-    created_at: idea.createdAt
+    id: idea.dataValues.id,
+    content: idea.dataValues.ontent,
+    impact: idea.dataValues.mpact,
+    ease: idea.dataValues.ease,
+    confidence: idea.dataValues.confidence,
+    average_score: average(idea.dataValues.impact, idea.dataValues.ease, idea.dataValues.confidence),
+    created_at: idea.dataValues.createdAt
   });
+});
+
+router.get('/ideas', [ensureAuth], async(req, res) => {
+  const page = (req.query.page && Math.max(parseInt(req.query.page), 1)) || 1;
+  const ideas = await models.Idea.findAll({ 
+    where: {
+      userId: req.userId
+    },
+    limit: 10,
+    raw: true,
+    offset: (page - 1) * 10 + 1
+  });
+  res.send(ideas);
 });
 
 module.exports = router;

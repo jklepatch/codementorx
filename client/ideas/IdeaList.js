@@ -39,8 +39,7 @@ const styles = {
   },
   impact: {
     fontWeight: 'normal',
-    fontSize: '0.8em',
-    with: '100'
+    fontSize: '0.8em'
   },
   ease: {
     fontWeight: 'normal',
@@ -50,8 +49,13 @@ const styles = {
     fontWeight: 'normal',
     fontSize: '0.8em'
   },
+  scoreCol: {
+    display: 'inline-block',
+    width: '80px'
+  },
   avg: {
-    fontSize: '0.8em'
+    fontSize: '0.8em',
+    width: '80'
   },
   noIdea: {
     margin: '200px  auto 0 auto',
@@ -60,77 +64,43 @@ const styles = {
   }
 };
 
-class IdeaList extends Component {
-  static defaultProps = {
-    ideas: []
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      ideas: props.ideas
-    };
-  }
-
-  addIdea = () => {
-    this.setState(state => (
-      {ideas: [...state.ideas, {
-        id: (new Date()).getTime(), 
-        content: '', 
-        impact: 10, 
-        ease: 10, 
-        confidence: 10, 
-        isEditing: true,
-        isNew: true
-      }]}
-    ));
-  }
-
-  cancelIdea = (id) => {
-    this.setState(state => (
-      {ideas: state.ideas.filter((idea) => idea.id != id)}
-    ));
-  }
-
-  render() {
-    const { classes, createIdea, updateIdea, deleteIdea } = this.props;
-    const { ideas } = this.state;
-    return (
-      <div className={classes.container} >
-        <div className={classes.titleContainer}>
-          <h2 className={classes.title}>My Ideas</h2>
-          <a href="#" onClick={(e) => this.addIdea()}><img className={classes.addIdea} src={AddIdeaImg} /></a>
-        </div>
-        <Divider />
-        {ideas.length > 0 ? (
-          <table className={classes.table}>
-            <thead className={classes.tableHeader}>
-              <tr>
-                <th></th>
-                <th className={classes.content}></th>
-                <th className={classes.impact}>Impact</th>
-                <th className={classes.ease}>Ease</th>
-                <th className={classes.confidence}>Confidence</th>
-                <th className={classes.avg}>Avg</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ideas.map((idea) => (
-                <Idea 
-                  {...idea} 
-                  key={idea.id} 
-                  createIdea={createIdea}
-                  updateIdeaIdea={updateIdea}
-                  deleteIdea={deleteIdea}
-                  cancelIdea={this.cancelIdea}
-                />
-              ))}
-            </tbody>
-          </table>
-        ) : <div className={classes.noIdea}><img src={BulbImg} /><p>Got Ideas?</p></div>}
+const IdeaList = (props) => { 
+  const { classes, createIdea, updateIdea, deleteIdea, ideas } = props;
+  return (
+    <div className={classes.container} >
+      <div className={classes.titleContainer}>
+        <h2 className={classes.title}>My Ideas</h2>
+        <a href="#" onClick={(e) => props.addIdea()}><img className={classes.addIdea} src={AddIdeaImg} /></a>
       </div>
-    );
-  }
+      <Divider />
+      {ideas.length > 0 ? (
+        <table className={classes.table}>
+          <thead className={classes.tableHeader}>
+            <tr>
+              <th></th>
+              <th className={classes.content}></th>
+              <th className={classes.impact}><span className={classes.scoreCol}>Impact</span></th>
+              <th className={classes.ease}><span className={classes.scoreCol}>Ease</span></th>
+              <th className={classes.confidence}>Confidence</th>
+              <th className={classes.avg}>Avg</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ideas.map((idea) => (
+              <Idea 
+                {...idea} 
+                key={idea.id} 
+                createIdea={createIdea}
+                updateIdeaIdea={updateIdea}
+                deleteIdea={deleteIdea}
+                cancelIdea={props.cancelIdea}
+              />
+            ))}
+          </tbody>
+        </table>
+      ) : <div className={classes.noIdea}><img src={BulbImg} /><p>Got Ideas?</p></div>}
+    </div>
+  );
 }
 
 export default withStyles(styles)(IdeaList);

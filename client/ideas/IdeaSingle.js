@@ -12,7 +12,8 @@ import DeleteImg from '../images/bin.png';
 
 const styles = {
   content: {
-    width: '100%'
+    width: '100%',
+    textAlign: 'left'
   },
   bullet: {
     color: '#AAAFB3'
@@ -61,9 +62,9 @@ class IdeaSingle extends Component {
     if(this.props.isNew) {
       this.props.createIdea({
         content: this.state.content,
-        content: this.state.impact,
-        content: this.state.ease,
-        content: this.state.confidence
+        impact: this.state.impact,
+        ease: this.state.ease,
+        confidence: this.state.confidence
       });
     }
   }
@@ -109,7 +110,7 @@ class IdeaSingle extends Component {
     return (
       <tr>
         <td><span className={classes.bullet}>&bull;</span></td>
-        <td>
+        <td className={classes.content}>
           {isEditing ? ( 
             <TextField
               className={classes.content}

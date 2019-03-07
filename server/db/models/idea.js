@@ -1,6 +1,10 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Idea = sequelize.define('Idea', {
+    userId: {
+      type: DataTypes.INTEGER,
+      references: 'Users',
+      referencesKey: 'id'
+    },
     content: DataTypes.STRING,
     impact: DataTypes.INTEGER,
     ease: DataTypes.INTEGER,

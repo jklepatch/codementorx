@@ -8,13 +8,13 @@ class AuthProvider extends Component {
   api = new Api()
 
   login = (user) => {
-    this.setState({user});
     this.api.setToken(user.jwt);
+    this.setState({user});
   }
 
   logout = () => {
-    this.setState({user: undefined});
     this.api.setToken(undefined);
+    this.setState({user: undefined});
   }
 
   render() {

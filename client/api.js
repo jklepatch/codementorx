@@ -5,16 +5,26 @@ class Api {
     this.token = token;
   }
 
-  _post(path, data, isAuth) {
+  _request(path, data, isAuth, method) {
     const headers = {
       'Content-Type': 'application/json'
     };
     if(isAuth) headers['Authorization'] = `Bearer ${this.token}`;
-    return fetch(`${API_URL}${path}`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(data)
-    });
+    const options = {
+      method,
+      headers
+    };
+    if(method == 'POST') options['body'] = JSON.stringify(data);
+    console.log(options);
+    return fetch(`${API_URL}${path}`, options);
+  }
+
+  _post(path, data, isAuth) {
+    return this._request(path, data, isAuth, 'POST');
+  }
+
+  _get(path, isAuth) {
+    return this._request(path, undefined, isAuth, 'GET');
   }
 
   signup(user) {
@@ -27,6 +37,10 @@ class Api {
 
   createIdea(idea) {
     return this._post('/ideas', idea, true);
+  }
+
+  getIdeas() {
+    return this._get('/ideas', true);
   }
 }
 
