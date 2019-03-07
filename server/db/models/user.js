@@ -6,6 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     name: { type: Sequelize.STRING, allowNull: false},
     password: { type: Sequelize.STRING, allowNull: false},
   });
-
+  User.associate = models => {
+    User.hasMany(models.Idea);
+  };
   return User;
 };

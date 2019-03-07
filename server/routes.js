@@ -1,7 +1,9 @@
 const { Router } = require('express');
 const bcrypt = require('bcrypt');
 const models = require('./db/models');
+const { ensureAuth } = require('./middlewares');
 const { login } = require('./services');
+const { average } = require('./utils');
 
 const router = new Router();
 
@@ -34,6 +36,26 @@ router.post('/access-tokens', async (req, res) => {
   }
   res.status(403);
   res.send({type: 'error', errors: ['Wrong username or password']});
+});
+
+router.post('/ideas', [ensureAuth], async(req, res) => {
+  const idea = await models.Idea.create({
+    userId: req.userId,
+    content: req.body.content,
+    impact: req.body.impact,
+    ease: req.body.ease,
+    confidence: req.body.confidence
+  });
+  res.status(201);
+  res.send({
+    id: idea.id,
+    content: idea.content,
+    impact: idea.impact,
+    ease: idea.ease,
+    confidence: idea.confidence,
+    average_score: average(idea.impact, idea.ease, idea.confidence),
+    created_at: idea.createdAt
+  });
 });
 
 module.exports = router;

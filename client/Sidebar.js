@@ -27,7 +27,7 @@ const Sidebar = ({ classes }) => (
             <hr />
             <p>Pic</p>
             <p>{user.name}</p>
-            <a href='#' onClick={(e) => {e.preventDefault(); logout();}}>Logout</a>}
+            <a href='#' onClick={(e) => {e.preventDefault(); logout();}}>Logout</a>
           </div>
         }
       </div>

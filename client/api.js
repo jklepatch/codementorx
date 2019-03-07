@@ -5,12 +5,14 @@ class Api {
     this.token = token;
   }
 
-  _post(path, data) {
+  _post(path, data, isAuth) {
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    if(isAuth) headers['Authorization'] = `Bearer ${this.token}`;
     return fetch(`${API_URL}${path}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers,
       body: JSON.stringify(data)
     });
   }
@@ -21,6 +23,10 @@ class Api {
 
   login(user) {
     return this._post('/access-tokens', user);
+  }
+
+  createIdea(idea) {
+    return this._post('/ideas', idea, true);
   }
 }
 

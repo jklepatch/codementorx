@@ -3,7 +3,7 @@ import { Switch, BrowserRouter as Router } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Signup from './Signup';
 import Login from './Login';
-import Ideas from './Ideas';
+import Ideas from './ideas/Ideas';
 import Sidebar from './Sidebar';
 import { AuthProvider } from './AuthContext';
 import { PrivateRoute, PublicRoute } from './Routes';
@@ -25,9 +25,10 @@ class App extends Component {
           <Sidebar />
           <Router>
             <Switch>>
+              {/*<PublicRoute path='/' component={Ideas} />*/}
               <PublicRoute path='/' component={Signup} exact />
               <PublicRoute path='/login' component={Login} />
-              <PrivateRoute path='/ideas' component={Ideas} />
+              <PrivateRoute path='/ideas' component={Ideas} />}
             </Switch>
           </Router>
         </AuthProvider>
