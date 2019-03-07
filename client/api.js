@@ -27,6 +27,10 @@ class Api {
     return this._request(path, undefined, isAuth, 'GET');
   }
 
+  _delete(path, isAuth) {
+    return this._request(path, undefined, isAuth, 'DELETE');
+  }
+
   signup(user) {
     return this._post('/users', user);
   }
@@ -41,6 +45,10 @@ class Api {
 
   getIdeas() {
     return this._get('/ideas', true);
+  }
+
+  deleteIdea(id) {
+    return this._delete(`/ideas/${id}`, true);
   }
 }
 

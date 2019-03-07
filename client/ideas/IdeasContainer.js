@@ -47,11 +47,19 @@ class IdeasContainer extends Component {
   async updateIdea() {
   }
 
-  async deleteIdea(idea) {
+  deleteIdea = async (id) => {
+    const resp = await this.props.api.deleteIdea(id);
+    //json parsing fail here?
+    //const jsonResp = await resp.json();
+    //if(typeof jsonResp.errors !== 'undefined') {
+    //  this.setState({errors: jsonResp.errors });
+    //  return; 
+    //}
+    await this.reloadIdeas();
   }
 
   async componentDidMount() {
-    await this.reloadIdeas();
+    const resp = await this.reloadIdeas();
   }
 
   render() {

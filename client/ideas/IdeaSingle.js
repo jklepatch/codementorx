@@ -78,7 +78,7 @@ class IdeaSingle extends Component {
   }
 
   handleDelete = () => {
-    //@TODO
+    this.props.deleteIdea(this.props.id);
   }
 
   renderSelect = (model) => {

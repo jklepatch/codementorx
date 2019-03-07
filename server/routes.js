@@ -72,4 +72,20 @@ router.get('/ideas', [ensureAuth], async(req, res) => {
   res.send(ideas);
 });
 
+router.delete('/ideas/:id', [ensureAuth], async(req, res) => {
+  const id = parseInt(req.params.id);
+  const idea = await models.Idea.findByPk(id);
+  if(idea === null) {
+    res.status(404);
+    return res.send({type: 'error', errors: ['This idea does not exist']});
+  }
+  if(idea.dataValues.userId != req.userId) {
+    res.status(403);
+    return res.send({type: 'error', errors: ['Can only delete your own ideas']});
+  }
+  await models.Idea.destroy({where: {id}});
+  res.status(204);
+  res.send();
+});
+
 module.exports = router;
