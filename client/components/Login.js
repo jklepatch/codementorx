@@ -89,6 +89,7 @@ class Login extends Component {
               label="Password"
               className={classes.textField}
               onChange={(e) => this.handleChangePassword(e.target.value)}
+              type="password"
             />
             <Button size="medium" type="submit" className={classes.button} >
               LOG IN 

@@ -66,6 +66,13 @@ const styles = {
 
 const IdeaList = (props) => { 
   const { classes, createIdea, updateIdea, deleteIdea, ideas } = props;
+  const sorted = ideas.sort((a, b) => {
+    const averageA = parseInt(a.ease) + parseInt(a.confidence) + parseInt(a.impact);
+    const averageB = parseInt(b.ease) + parseInt(b.confidence) + parseInt(b.impact);
+    if(averageA > averageB) return -1;
+    if(averageA === averageB) return 0;
+    return  1;
+  });
   return (
     <div className={classes.container} >
       <div className={classes.titleContainer}>
@@ -73,7 +80,7 @@ const IdeaList = (props) => {
         <a href="#" onClick={(e) => props.addIdea()}><img className={classes.addIdea} src={AddIdeaImg} /></a>
       </div>
       <Divider />
-      {ideas.length > 0 ? (
+      {sorted.length > 0 ? (
         <table className={classes.table}>
           <thead className={classes.tableHeader}>
             <tr>

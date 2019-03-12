@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const randtoken = require('rand-token');
 const { JWT_SECRET } = require('./config/other');
 
-const expiresIn = 300;
+const expiresIn = 600; //10 mins
 const refreshTokens = {}; //could be moved to db
 
 const login = (user) => {
