@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const bcrypt = require('bcrypt');
+const md5 = require('md5');
 const models = require('./db/models');
 const { ensureAuth } = require('./middlewares');
 const { login } = require('./services');
@@ -36,6 +37,19 @@ router.post('/access-tokens', async (req, res) => {
   }
   res.status(403);
   res.send({type: 'error', errors: ['Wrong username or password']});
+});
+
+router.get('/me', [ensureAuth], async (req, res) => {
+  const user = await models.User.findById(req.userId);
+  if(!user) {
+    res.status(404);
+    return res.send({type: 'error', errors: ['This user does not exist'] });
+  }
+  res.send({
+    email: user.dataValues.user,
+    name: user.dataValues.name,
+    avatar_url: `https://www.gravatar.com/avatar/${md5(user.dataValues.email)}`
+  });
 });
 
 router.post('/ideas', [ensureAuth], async(req, res) => {

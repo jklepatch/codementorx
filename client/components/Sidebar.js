@@ -13,6 +13,13 @@ const styles = theme => ({
   },
   hr: {
     color: 'rgba(255,255,255,0.2)'
+  },
+  gravatar: {
+    borderRadius: '40px'
+  },
+  logout: {
+    color: 'rgba(42,56,66,0.65)',
+    textDecoration: 'none'
   }
 });
 
@@ -25,9 +32,9 @@ const Sidebar = ({ classes }) => (
         {user &&
           <div>
             <hr />
-            <p>Pic</p>
+            <p><img className={classes.gravatar} src={user.avatar_url}/></p>
             <p>{user.name}</p>
-            <a href='#' onClick={(e) => {e.preventDefault(); logout();}}>Logout</a>
+            <a className={classes.logout} href='#' onClick={(e) => {e.preventDefault(); logout();}}>Logout</a>
           </div>
         }
       </div>

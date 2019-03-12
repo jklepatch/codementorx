@@ -42,6 +42,10 @@ class Api {
     return this._post('/access-tokens', user);
   }
 
+  getMe() {
+    return this._get('/me', true);
+  }
+
   createIdea(idea) {
     return this._post('/ideas', idea, true);
   }

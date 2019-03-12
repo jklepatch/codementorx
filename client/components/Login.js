@@ -44,13 +44,20 @@ class Login extends Component {
   async handleSubmit(e) {
     e.preventDefault();
     const { errors, ...rest } = this.state;
-    const resp = await this.context.api.login(rest);
-    const jsonResp = await resp.json();
-    if(typeof jsonResp.errors !== 'undefined') {
-      this.setState({errors: jsonResp.errors });
+    const resp1 = await this.context.api.login(rest);
+    const jsonResp1 = await resp1.json();
+    if(typeof jsonResp1.errors !== 'undefined') {
+      this.setState({errors: jsonResp1.errors });
       return; 
     }
-    this.context.login({...rest, ...jsonResp});
+    this.context.api.setToken(jsonResp1.jwt);
+    const resp2 = await this.context.api.getMe();
+    const jsonResp2 = await resp2.json();
+    if(typeof jsonResp2.errors !== 'undefined') {
+      this.setState({errors: jsonResp2.errors });
+      return; 
+    }
+    this.context.login({...jsonResp1, ...jsonResp2});
   }
 
   handleChangeEmail(email) {
