@@ -14,8 +14,7 @@ class Api {
       method,
       headers
     };
-    if(method == 'POST') options['body'] = JSON.stringify(data);
-    console.log(options);
+    if(['POST', 'PUT'].indexOf(method) > -1) options['body'] = JSON.stringify(data);
     return fetch(`${API_URL}${path}`, options);
   }
 
@@ -29,6 +28,10 @@ class Api {
 
   _delete(path, isAuth) {
     return this._request(path, undefined, isAuth, 'DELETE');
+  }
+
+  _put(path, data, isAuth) {
+    return this._request(path, data, isAuth, 'PUT');
   }
 
   signup(user) {
@@ -49,6 +52,10 @@ class Api {
 
   deleteIdea(id) {
     return this._delete(`/ideas/${id}`, true);
+  }
+
+  updateIdea(id, update) {
+    return this._put(`/ideas/${id}`, update, true);
   }
 }
 

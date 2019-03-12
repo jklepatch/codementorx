@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import IdeaList from './IdeaList';
+import Modal from './Modal';
 
 class IdeasContainer extends Component {
   state = {
     ideas: [],
-    errors: []
+    errors: [],
+    isModal: false,
+    toDelete: undefined
   }
 
   reloadIdeas = async () => {
@@ -44,17 +47,34 @@ class IdeasContainer extends Component {
     ));
   }
 
-  async updateIdea() {
+  updateIdea = async (id, update) => {
+    const resp = await this.props.api.updateIdea(id, update);
+    const jsonResp = await resp.json();
+    if(typeof jsonResp.errors !== 'undefined') {
+      this.setState({errors: jsonResp.errors });
+      return; 
+    }
+    await this.reloadIdeas();
   }
 
-  deleteIdea = async (id) => {
-    const resp = await this.props.api.deleteIdea(id);
+  deleteIdea = (id) => {
+    this.setState({isModal: true, toDelete: id});
+  }
+
+  handleAgree = async () => {
+    const resp = await this.props.api.deleteIdea(this.state.toDelete);
     //json parsing fail here?
     //const jsonResp = await resp.json();
     //if(typeof jsonResp.errors !== 'undefined') {
     //  this.setState({errors: jsonResp.errors });
     //  return; 
     //}
+    this.setState({isModal: false, toDelete: null});
+    await this.reloadIdeas();
+  }
+
+  handleDisagree = async () => {
+    this.setState({isModal: false, toDelete: null});
     await this.reloadIdeas();
   }
 
@@ -63,17 +83,24 @@ class IdeasContainer extends Component {
   }
 
   render() {
-    const { ideas, errors } = this.state;
+    const { ideas, errors, isModal } = this.state;
     return (
-      <IdeaList 
-        ideas={ideas} 
-        errors={errors} 
-        createIdea={this.createIdea}
-        updateIdea={this.updateIdea}
-        deleteIdea={this.deleteIdea}
-        addIdea={this.addIdea}
-        cancelIdea={this.cancelIdea}
-      />
+      <Fragment>
+        <Modal 
+          isModal={isModal} 
+          handleAgree={this.handleAgree} 
+          handleDisagree={this.handleDisagree} 
+        />
+        <IdeaList 
+          ideas={ideas} 
+          errors={errors} 
+          createIdea={this.createIdea}
+          updateIdea={this.updateIdea}
+          deleteIdea={this.deleteIdea}
+          addIdea={this.addIdea}
+          cancelIdea={this.cancelIdea}
+        />
+      </Fragment>
     );
   }
 };

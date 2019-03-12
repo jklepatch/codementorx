@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import ideaPoolImg from './images/IdeaPool_icon.png';
-import { AuthConsumer } from './AuthContext';
+import ideaPoolImg from '../images/IdeaPool_icon.png';
+import { AuthConsumer } from '../AuthContext';
 
 const styles = theme => ({
   container: {

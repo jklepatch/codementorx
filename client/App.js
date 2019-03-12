@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, BrowserRouter as Router } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Signup from './Signup';
-import Login from './Login';
-import Ideas from './ideas/Ideas';
-import Sidebar from './Sidebar';
+import Signup from './components/Signup';
+import Login from './components/Login';
+import Ideas from './components/ideas/Ideas';
+import Sidebar from './components/Sidebar';
 import { AuthProvider } from './AuthContext';
 import { PrivateRoute, PublicRoute } from './Routes';
 

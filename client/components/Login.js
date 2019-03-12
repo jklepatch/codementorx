@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from "react-router";
-import { Redirect, Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
-import { AuthContext } from './AuthContext';
+import { AuthContext } from '../AuthContext';
 
 const styles = theme => ({
   container: {
@@ -36,24 +34,17 @@ const styles = theme => ({
   }
 });
 
-class Signup extends Component {
-  static propTypes = {
-    match: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
-  };
-
+class Login extends Component {
   state = {
     email: '',
-    name: '',
     password: '',
     errors: undefined 
   }
 
-  async handleSubmit (e) {
+  async handleSubmit(e) {
     e.preventDefault();
     const { errors, ...rest } = this.state;
-    const resp = await this.context.api.signup(rest);
+    const resp = await this.context.api.login(rest);
     const jsonResp = await resp.json();
     if(typeof jsonResp.errors !== 'undefined') {
       this.setState({errors: jsonResp.errors });
@@ -66,10 +57,6 @@ class Signup extends Component {
     this.setState({email});
   }
 
-  handleChangeName(name) {
-    this.setState({name});
-  }
-
   handleChangePassword(password) {
     this.setState({password});
   }
@@ -79,21 +66,17 @@ class Signup extends Component {
     if(this.context.user) return <Redirect to='/ideas' />
     return (
       <div className={classes.container}>
-          <form className={classes.form} onSubmit={(e) => this.handleSubmit(e)} >
-            <h2 className={classes.h2} >Sign Up</h2>
+          <form className={classes.form} onSubmit={(e) => this.handleSubmit(e)}>
+            <h2 className={classes.h2} >Log In</h2>
             {this.state.errors ? (
               <SnackbarContent
-                message="Ooops there were some errors. Make sure you provided a non-empty email, name and password. Password must be at least 8 characters long, contain 1 lowercase character, 1 uppercase, and 1 digit"
+                message="Ooops there were some errors. Make sure you provided the correct email and password"
               /> ) : null }
             <TextField
               label="Email"
               className={classes.textField}
               onChange={(e) => this.handleChangeEmail(e.target.value)}
-            />
-            <TextField
-              label="Name"
-              className={classes.textField}
-              onChange={(e) => this.handleChangeName(e.target.value)}
+                 
             />
             <TextField
               label="Password"
@@ -101,10 +84,10 @@ class Signup extends Component {
               onChange={(e) => this.handleChangePassword(e.target.value)}
             />
             <Button size="medium" type="submit" className={classes.button} >
-              SIGN UP
+              LOG IN 
             </Button>
-            <Link to='/login'>
-              Already have an account? Login
+            <Link to='/'>
+              Dont have an account? Create an account
             </Link>
         </form>
 
@@ -113,6 +96,6 @@ class Signup extends Component {
   }
 }
 
-Signup.contextType = AuthContext;
+Login.contextType = AuthContext;
 
-export default withRouter(withStyles(styles)(Signup));
+export default withStyles(styles)(Login);

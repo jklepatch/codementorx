@@ -34,6 +34,17 @@ const createIdea = {
   required: ["content", "impact", "ease", "confidence"]
 };
 
+const editIdea = {
+  type: "object",
+  required: true,
+  properties: {
+    content: {type: "string"}, 
+    impact: {type: "integer", minimum: 1, maximum: 10},
+    ease: {type: "integer", minimum: 1, maximum: 10},
+    confidence: {type: "integer", minimum: 1, maximum: 10}
+  },
+};
+
 module.exports = {
   '/users': {
     POST: createUser
@@ -41,7 +52,10 @@ module.exports = {
   '/access-tokens': {
     POST: login
   },
-  //'/ideas': {
-  //  POST: createIdea
-  //}
+  '/ideas': {
+    POST: createIdea
+  },
+  '/ideas/:id': {
+    PUT: editIdea
+  }
 };

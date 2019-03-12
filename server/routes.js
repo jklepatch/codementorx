@@ -39,7 +39,6 @@ router.post('/access-tokens', async (req, res) => {
 });
 
 router.post('/ideas', [ensureAuth], async(req, res) => {
-  console.log(req.userId);
   const idea = await models.Idea.create({
     userId: req.userId,
     content: req.body.content,
@@ -50,8 +49,8 @@ router.post('/ideas', [ensureAuth], async(req, res) => {
   res.status(201);
   res.send({
     id: idea.dataValues.id,
-    content: idea.dataValues.ontent,
-    impact: idea.dataValues.mpact,
+    content: idea.dataValues.content,
+    impact: idea.dataValues.compact,
     ease: idea.dataValues.ease,
     confidence: idea.dataValues.confidence,
     average_score: average(idea.dataValues.impact, idea.dataValues.ease, idea.dataValues.confidence),
@@ -86,6 +85,32 @@ router.delete('/ideas/:id', [ensureAuth], async(req, res) => {
   await models.Idea.destroy({where: {id}});
   res.status(204);
   res.send();
+});
+
+router.put('/ideas/:id', [ensureAuth], async(req, res) => {
+  const id = parseInt(req.params.id);
+  const idea = await models.Idea.findByPk(id);
+  console.log(id);
+  console.log(req.body);
+  if(idea === null) {
+    console.log('does not exit');
+    res.status(404);
+    return res.send({type: 'error', errors: ['This idea does not exist']});
+  }
+  if(idea.dataValues.userId != req.userId) {
+    res.status(403);
+    return res.send({type: 'error', errors: ['Can only edit your own ideas']});
+  }
+  await models.Idea.update({...req.body}, {where: {id}});
+  res.send({
+    id: idea.dataValues.id,
+    content: idea.dataValues.content,
+    impact: idea.dataValues.mpact,
+    ease: idea.dataValues.ease,
+    confidence: idea.dataValues.confidence,
+    average_score: average(idea.dataValues.impact, idea.dataValues.ease, idea.dataValues.confidence),
+    created_at: idea.dataValues.createdAt
+  });
 });
 
 module.exports = router;

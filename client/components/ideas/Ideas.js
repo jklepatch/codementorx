@@ -1,5 +1,5 @@
 import React from 'react';
-import { AuthConsumer } from '../AuthContext';
+import { AuthConsumer } from '../../AuthContext';
 import IdeasContainer from './IdeasContainer';
 
 const Ideas = () => (

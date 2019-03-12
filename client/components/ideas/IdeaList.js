@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
-import Idea from './IdeaSingle';
-import BulbImg from '../images/bulb.png';
-import AddIdeaImg from '../images/btn_addanidea.png';
+import Idea from './IdeaSingleContainer';
+import BulbImg from '../../images/bulb.png';
+import AddIdeaImg from '../../images/btn_addanidea.png';
 
 const styles = {
   container: {
@@ -91,7 +91,7 @@ const IdeaList = (props) => {
                 {...idea} 
                 key={idea.id} 
                 createIdea={createIdea}
-                updateIdeaIdea={updateIdea}
+                updateIdea={updateIdea}
                 deleteIdea={deleteIdea}
                 cancelIdea={props.cancelIdea}
               />
