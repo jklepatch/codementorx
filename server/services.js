@@ -16,4 +16,11 @@ const logout = (user) => {
   refreshTokens[user.refresh_token] = undefined;
 }
 
-module.exports = { login, logout };
+const refreshJWT = (user) => {
+  if(!refreshTokens[user.refresh_token] || refreshTokens[user.refreshToken] !== parseInt(user.id)) {
+    return false;
+  }
+  return jwt.sign({sub: user.id }, JWT_SECRET, {expiresIn});
+}
+
+module.exports = { login, logout, refreshJWT };

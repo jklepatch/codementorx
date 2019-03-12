@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const md5 = require('md5');
 const models = require('./db/models');
 const { ensureAuth } = require('./middlewares');
-const { login, logout } = require('./services');
+const { login, logout, refreshJWT } = require('./services');
 const { average } = require('./utils');
 
 const router = new Router();
@@ -37,6 +37,16 @@ router.post('/access-tokens', async (req, res) => {
   }
   res.status(403);
   res.send({type: 'error', errors: ['Wrong username or password']});
+});
+
+router.post('/access-tokens/refresh', async (req, res) => {
+  const token = refreshJWT({refresh_token: req.body.refresh_token, id: req.userId});
+  if(!token) {
+    res.status(403);
+    res.send({type: 'error', errors: ['refresh_token invalid']});
+    return;
+  }
+  res.send({jwt: token})
 });
 
 router.delete('/access-tokens', [ensureAuth], async (req, res) => {

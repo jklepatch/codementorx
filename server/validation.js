@@ -22,6 +22,15 @@ const login = {
   required: ["email", "password"]
 };
 
+const refreshToken = {
+  type: "object",
+  required: true,
+  properties: {
+    refresh_token: {type: "string"}
+  },
+  required: ["refresh_token"]
+};
+
 const logout = {
   type: "object",
   required: true,
@@ -60,6 +69,9 @@ module.exports = {
   },
   '/access-tokens': {
     POST: login
+  },
+  '/access-tokens/refresh': {
+    POST: refreshToken
   },
   '/access-tokens': {
     DELETE: logout
