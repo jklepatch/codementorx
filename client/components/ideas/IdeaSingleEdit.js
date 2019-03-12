@@ -78,7 +78,7 @@ class IdeaSingleEdit extends Component {
         </td>
         <td>{this.renderSelect('impact')}</td>
         <td>{this.renderSelect('ease')}</td>
-        <td>{this.renderSelect('ease')}</td>
+        <td>{this.renderSelect('confidence')}</td>
         <td>{((parseInt(impact) + parseInt(ease) + parseInt(confidence)) / 3).toFixed(2)}</td>
         <td><a href='#' onClick={(e) => handleConfirm({content, impact, ease, confidence})}><img src={ConfirmImg} /></a></td>
         <td><a href='#' onClick={(e) => handleCancel()}><img src={CancelImg} /></a></td>
