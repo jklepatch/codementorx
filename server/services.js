@@ -12,4 +12,8 @@ const login = (user) => {
   return { access, refresh };
 }
 
-module.exports = { login };
+const logout = (user) => {
+  refreshTokens[user.refresh_token] = undefined;
+}
+
+module.exports = { login, logout };

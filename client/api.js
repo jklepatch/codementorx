@@ -14,7 +14,7 @@ class Api {
       method,
       headers
     };
-    if(['POST', 'PUT'].indexOf(method) > -1) options['body'] = JSON.stringify(data);
+    if(['POST', 'PUT', 'DELETE'].indexOf(method) > -1) options['body'] = JSON.stringify(data);
     return fetch(`${API_URL}${path}`, options);
   }
 
@@ -26,8 +26,8 @@ class Api {
     return this._request(path, undefined, isAuth, 'GET');
   }
 
-  _delete(path, isAuth) {
-    return this._request(path, undefined, isAuth, 'DELETE');
+  _delete(path, data, isAuth) {
+    return this._request(path, data, isAuth, 'DELETE');
   }
 
   _put(path, data, isAuth) {
@@ -40,6 +40,10 @@ class Api {
 
   login(user) {
     return this._post('/access-tokens', user);
+  }
+
+  logout(user) {
+    return this._delete('/access-tokens', {refresh_token: user.refresh_token}, true);
   }
 
   getMe() {
@@ -55,7 +59,7 @@ class Api {
   }
 
   deleteIdea(id) {
-    return this._delete(`/ideas/${id}`, true);
+    return this._delete(`/ideas/${id}`, undefined, true);
   }
 
   updateIdea(id, update) {

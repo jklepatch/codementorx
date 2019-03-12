@@ -22,6 +22,15 @@ const login = {
   required: ["email", "password"]
 };
 
+const logout = {
+  type: "object",
+  required: true,
+  properties: {
+    refresh_token: {type: "string"}
+  },
+  required: ["refresh_token"]
+};
+
 const createIdea = {
   type: "object",
   required: true,
@@ -51,6 +60,9 @@ module.exports = {
   },
   '/access-tokens': {
     POST: login
+  },
+  '/access-tokens': {
+    DELETE: logout
   },
   '/ideas': {
     POST: createIdea

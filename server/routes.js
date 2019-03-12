@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const md5 = require('md5');
 const models = require('./db/models');
 const { ensureAuth } = require('./middlewares');
-const { login } = require('./services');
+const { login, logout } = require('./services');
 const { average } = require('./utils');
 
 const router = new Router();
@@ -39,8 +39,14 @@ router.post('/access-tokens', async (req, res) => {
   res.send({type: 'error', errors: ['Wrong username or password']});
 });
 
+router.delete('/access-tokens', [ensureAuth], async (req, res) => {
+  logout({refresh_token: req.body.refresh_token});
+  res.status(204);
+  res.send({refresh_token: req.body.refresh_token });
+});
+
 router.get('/me', [ensureAuth], async (req, res) => {
-  const user = await models.User.findById(req.userId);
+  const user = await models.User.findByPk(req.userId);
   if(!user) {
     res.status(404);
     return res.send({type: 'error', errors: ['This user does not exist'] });
@@ -104,10 +110,7 @@ router.delete('/ideas/:id', [ensureAuth], async(req, res) => {
 router.put('/ideas/:id', [ensureAuth], async(req, res) => {
   const id = parseInt(req.params.id);
   const idea = await models.Idea.findByPk(id);
-  console.log(id);
-  console.log(req.body);
   if(idea === null) {
-    console.log('does not exit');
     res.status(404);
     return res.send({type: 'error', errors: ['This idea does not exist']});
   }

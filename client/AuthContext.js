@@ -12,6 +12,7 @@ class AuthProvider extends Component {
   }
 
   logout = () => {
+    this.api.logout(this.state.user);
     this.api.setToken(undefined);
     this.setState({user: undefined});
   }
