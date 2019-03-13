@@ -141,7 +141,7 @@ router.put('/ideas/:id', [ensureAuth], async(req, res) => {
 });
 
 router.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '../public/index.html');
 })
 
 module.exports = router;
