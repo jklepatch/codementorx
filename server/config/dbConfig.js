@@ -13,7 +13,7 @@ module.exports = {
   },
   production: {
     dialect: 'sqlite',
-    storage: path.join(__dirname, '../../db.development.sqlite'),
+    storage: ':memory', 
     operatorsAliases: false
   }
 };
