@@ -3,12 +3,14 @@ const webpack = require('webpack');
 
 let envPlugin;
 if(process.env.NODE_ENV === 'production') {
-  envPlugin = new webpack.EnvironmentPlugin(['API_URL', 'https://codementorx-jklepatch.herokuapp.com']);
+  envPlugin = new webpack.DefinePlugin({'API_URL': 'https://codementorx-jklepatch.herokuapp.com'});
+} else {
+  envPlugin = new webpack.DefinePlugin({'API_URL': 'http://localhost:3000'});
 }
 
 module.exports = {
   mode: 'development',
-  entry: '/client/index.js',
+  entry: './client/index.js',
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
@@ -46,4 +48,4 @@ module.exports = {
     contentBase: path.join(__dirname, 'public'),
   },
   plugins: [envPlugin]
-}
+};

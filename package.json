@@ -7,8 +7,8 @@
     "node": "8.x"
   },
   "scripts": {
-    "web": "NODE_ENV=production npm run migrate && npm run start", 
-    "build": "npm install && npm run migrate node_modules/.bin/webpack --env NODE_ENV=production --mode production",
+    "web": "NODE_ENV=production npm run migrate && npm run start",
+    "build": "npm install && npm run migrate && NODE_ENV=production node_modules/.bin/webpack --mode=production",
     "start": "node server",
     "start:dev": "npm run start:back:dev & npm run start:front:dev",
     "start:back:dev": "nodemon --watch server server",
