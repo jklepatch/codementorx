@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Api from './Api';
+import Api from './api';
 
 const AuthContext = React.createContext();
 
