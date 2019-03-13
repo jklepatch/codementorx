@@ -9,6 +9,7 @@ app.use(cors())
 app.use(bodyParser.json());
 app.use(validate)
 app.use(routes);
+app.use(express.static('public'));
 app.use(errorHandler);
 
 module.exports = app;

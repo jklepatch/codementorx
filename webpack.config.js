@@ -1,4 +1,10 @@
 const path = require('path');
+const webpack = require('webpack');
+
+let envPlugin;
+if(process.env.NODE_ENV === 'production') {
+  envPlugin = new webpack.EnvironmentPlugin(['API_URL', 'https://codementorx-jklepatch.herokuapp.com']);
+}
 
 module.exports = {
   mode: 'development',
@@ -36,7 +42,8 @@ module.exports = {
       }
     ]
   },
-   devServer: {
+  devServer: {
     contentBase: path.join(__dirname, 'public'),
-  }
+  },
+  plugins: [envPlugin]
 }
