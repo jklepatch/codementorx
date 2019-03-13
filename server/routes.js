@@ -28,8 +28,12 @@ router.post('/users', async (req, res, next) => {
 
 router.post('/access-tokens', async (req, res) => {
   const user = await models.User.findOne({where: {email: req.body.email}}) 
+  console.log('POST access-tokens');
+  console.log(user);
+  console.log(req.body);
   if(user) {
     const match = await bcrypt.compare(req.body.password, user.password);
+    console.log(match);
     if(match) {
       const tokens = login(user);
       res.status(201);
