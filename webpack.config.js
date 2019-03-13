@@ -3,9 +3,9 @@ const webpack = require('webpack');
 
 let envPlugin;
 if(process.env.NODE_ENV === 'production') {
-  envPlugin = new webpack.DefinePlugin({'API_URL': 'https://codementorx-jklepatch.herokuapp.com'});
+  envPlugin = new webpack.DefinePlugin({API_URL: JSON.stringify('https://codementorx-jklepatch.herokuapp.com')});
 } else {
-  envPlugin = new webpack.DefinePlugin({'API_URL': 'http://localhost:3000'});
+  envPlugin = new webpack.DefinePlugin({API_URL: JSON.stringify('http://localhost:3000')});
 }
 
 module.exports = {
