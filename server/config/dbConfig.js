@@ -10,5 +10,10 @@ module.exports = {
     dialect: 'sqlite',
     storage: ':memory:',
     operatorsAliases: false
+  },
+  production: {
+    dialect: 'sqlite',
+    storage: path.join(__dirname, '../../db.development.sqlite'),
+    operatorsAliases: false
   }
 };
