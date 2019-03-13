@@ -4,4 +4,4 @@ tags.*
 *.sqlite
 node_modules
 public/bundle.js
-*.png
+public/*.png
