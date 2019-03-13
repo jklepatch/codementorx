@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const path = require('path');
 const bcrypt = require('bcrypt');
 const md5 = require('md5');
 const models = require('./db/models');
@@ -141,7 +142,7 @@ router.put('/ideas/:id', [ensureAuth], async(req, res) => {
 });
 
 router.get('/', (req, res) => {
-  res.sendFile(__dirname + '../public/index.html');
+  res.sendFile(path.join(__dirname, '..public/index.html'));
 })
 
 module.exports = router;
