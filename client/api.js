@@ -1,4 +1,6 @@
-const API_URL = process.env.API_URL ? process.env.API_URL : 'http://localhost:3000';
+//const API_URL = process.env.API_URL ? process.env.API_URL : 'http://localhost:3000';
+console.log('API_URL');
+console.log(process.env.API_URL);
 
 class Api {
   setToken(token) {
@@ -15,7 +17,7 @@ class Api {
       headers
     };
     if(['POST', 'PUT', 'DELETE'].indexOf(method) > -1) options['body'] = JSON.stringify(data);
-    return fetch(`${API_URL}${path}`, options);
+    return fetch(`${API_URL || 'http://localhost:3000'}${path}`, options);
   }
 
   _post(path, data, isAuth) {
