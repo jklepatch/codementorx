@@ -15,7 +15,6 @@ class Api {
       headers
     };
     if(['POST', 'PUT', 'DELETE'].indexOf(method) > -1) options['body'] = JSON.stringify(data);
-    console.log(options);
     return fetch(`${BASE_URL}${path}`, options);
   }
 
